@@ -1,0 +1,8 @@
+*
+
+!./program??
+!./program??/*.cpp
+!./program??/*.h
+!./program??/*.txt
+
+!.gitignore
