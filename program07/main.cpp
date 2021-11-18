@@ -20,9 +20,11 @@ int main() {
             cin.clear();
             cout << "Invalid phone number has been entered." << endl;
             cout << "Would you like to enter another phone number? ";
-            cin >> response;
+            cin.getline(response, 2);
+            // cin >> response;
+            cout << response << endl;
             if(response[0] == 'y' || response[0] == 'Y'){
-                cin.clear();
+                // cin.clear();
                 cout << "\n\n\n" << endl;
             } else {
                 cout << "else" << endl;
@@ -30,9 +32,6 @@ int main() {
             }
         }
     }
-
-
-
 
 
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
