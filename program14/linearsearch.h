@@ -9,4 +9,7 @@
 #include <array>
 using namespace std;
 
+template <typename T, size_t size>
+int linearSearch(const array<T, size>& items, const T& key);
+
 #endif //PROGRAM13_LINEARSEARCH_H
