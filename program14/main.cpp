@@ -74,6 +74,7 @@ void searchSortList(List<T>& listObject, const string& typeName){
 
     int choice;
     T value;
+    int element;
 
     do {
         cout << "? ";
@@ -83,8 +84,13 @@ void searchSortList(List<T>& listObject, const string& typeName){
             case 1: // TODO: linearSearch
                 cout << "Enter " << typeName << " to search in the list: ";
                 cout << "Do line search" << endl;
-//                cin >> value;
-//                int element{linearSearch(listObject, searchKey)};
+                cin >> value;
+                element = listObject.linearSearch(value);
+                if(element != -1){
+                    cout << "Element found at index position " << element << ".\n";
+                } else {
+                    cout << "Element not found in list.\n";
+                }
                 break;
 
             case 2: // TODO: SelectionSort
