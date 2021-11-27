@@ -8,10 +8,6 @@
 #include <iostream>
 #include <string>
 #include "list.h"
-#include "linearsearch.h"
-#include "binarysearch.h"
-#include "selectionsort.h"
-#include "mergesort.h"
 
 using namespace std;
 
