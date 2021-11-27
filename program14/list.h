@@ -6,6 +6,7 @@
 #define PROGRAM13_LIST_H
 
 #include <iostream>
+#include <array>
 #include "listnode.h"
 
 template<typename NODETYPE>
@@ -34,9 +35,11 @@ public:
 
         if(isEmpty()){
             firstPtr = lastPtr = newPtr;
+            size++;
         } else {
             newPtr->nextPtr = firstPtr;
             firstPtr = newPtr;
+            size++;
         }
     } // end insertAtFront
 
@@ -45,9 +48,11 @@ public:
 
         if(isEmpty()){
             firstPtr = lastPtr = newPtr;
+            size++;
         } else {
             lastPtr->nextPtr = newPtr;
             lastPtr = newPtr;
+            size++;
         }
     } // end insertAtBack
 
@@ -65,6 +70,7 @@ public:
 
             value = tempPtr->data;
             delete tempPtr;
+            size--;
             return true;
         }
     } // end removeFromFront
@@ -91,12 +97,17 @@ public:
 
             value = tempPtr->data;
             delete tempPtr;
+            size--;
             return true;
         }
     }
 
     bool isEmpty() const {
         return firstPtr == nullptr;
+    }
+
+    int getSize() const {
+        return size;
     }
 
     void print() const{
@@ -117,6 +128,27 @@ public:
         std::cout << "\n\n";
     } // end print()
 
+    int linearSearch(NODETYPE& value){
+        if(isEmpty()){
+            std::cout << "The list is empty\n\n";
+            return -1;
+        }
+
+        ListNode<NODETYPE>* currentPtr{firstPtr};
+        int index = 0;
+
+        while(currentPtr != nullptr){
+            if(currentPtr->data == value){
+                return index;
+            } else {
+                currentPtr = currentPtr->nextPtr;
+                index++;
+            }
+        }
+        return -1;
+    }
+
+
 private:
     ListNode<NODETYPE>* firstPtr{nullptr};
     ListNode<NODETYPE>* lastPtr{nullptr};
@@ -125,6 +157,7 @@ private:
         return new ListNode<NODETYPE>{value};
     }
 
+    int size = 0;
 };
 
 
