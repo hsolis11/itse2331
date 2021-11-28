@@ -21,9 +21,7 @@ public:
     ~List(){
         if(!isEmpty()){
             std::cout << "Destroying nodes...\n";
-
         }
-
         std::cout << "All nodes destroyed\n\n";
     }
 
@@ -68,7 +66,8 @@ public:
     } // end removeFromFront
 
     bool removeFromBack(){
-        myArray[arraySize--] = -1;
+        myArray[arraySize-1] = -1;
+        arraySize--;
         return true;
     }
 
@@ -116,10 +115,6 @@ public:
         return arraySize < 0;
     }
 
-    int getSize() const {
-        return arraySize;
-    }
-
     void print() const{
         cout << "Array: ";
         for(int i=0; i<arraySize; i++){
@@ -160,17 +155,6 @@ public:
         mergeSort(myArray, 0, arraySize-1);
     }
 
-    void displayElements(const array<NODETYPE, 50>& items, size_t low, size_t high){
-        for(size_t i{0}; i<items.size() && i < low; ++i){
-            cout << "   ";
-        }
-        for(size_t i{low}; i<items.size() && i <= high; ++i){
-            cout << items[i] << " ";
-        }
-        cout << endl;
-    }
-
-
     int BinarySearch(const NODETYPE& key){
         cout << "Sorting before binary search...\n";
         MergeSort();
@@ -181,31 +165,18 @@ public:
         int location{-1};
 
         do {
-            displayElements(myArray, low, high);
-
-            for(int i{0}; i< middle; ++i){
-                cout << "   ";
-            }
-            cout << " * " << endl;
-            //    cout << "Before key: " << key << " location: " << location << " middle: " << middle << endl;
             if(key == myArray[middle]){
-                //cout << "in equals\n";
                 location = middle;
             }
             else if(key < myArray[middle]){
-                //cout << "in less than\n";
                 high = middle - 1;
             }
             else {
-                //cout << "in else\n";
                 low = middle + 1;
             }
 
             middle = (low + high + 1) / 2;
-            //cout << "After key: " << key << " location: " << location << " middle: " << middle << endl;
         } while((low <= high) && (location == -1));
-
-        cout << "location " << location << endl;
 
         return location;
     }
