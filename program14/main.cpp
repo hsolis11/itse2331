@@ -10,7 +10,9 @@ void instructions() {
          << " 2. to insert at end of list\n"
          << " 3. to delete from begining of list\n"
          << " 4. to delete from end of list\n"
-         << " 5. to end list processing\n";
+         << " 5. insert at a location (index value)\n"
+         << " 6. delete a node from the list based on its value\n"
+         << " 7. end list processing\n";
 }
 
 void search_sort_instructions(){
@@ -18,7 +20,8 @@ void search_sort_instructions(){
         << "1. linear search\n"
         << "2. selection sort\n"
         << "3. merge sort\n"
-        << "4. binary search\n";
+        << "4. binary search\n"
+        << "5. end list sort/search\n";
 }
 
 
@@ -29,6 +32,7 @@ void testList(List<T>& listObject, const string& typeName){
 
     int choice;
     T value;
+    int index;
 
     do {
         cout << "? ";
@@ -36,34 +40,51 @@ void testList(List<T>& listObject, const string& typeName){
 
         switch(choice){
             case 1:
-                cout << "Enter " << typeName << ": ";
+                cout << "Insert at begining\n"
+                    << "Enter " << typeName << ": ";
                 cin >> value;
                 listObject.insertAtFront(value);
                 listObject.print();
                 break;
 
             case 2:
-                cout << "Enter " << typeName << ": ";
+                cout << "Insert at end of list\n"
+                    << "Enter " << typeName << ": ";
                 cin >> value;
                 listObject.insertAtBack(value);
                 listObject.print();
                 break;
             case 3:
-                if(listObject.removeFromFront(value)){
-                    cout << value << " removed from list\n";
-                }
-
+                cout << "Delete from front of list\n";
+                listObject.removeFromFront();
                 listObject.print();
                 break;
             case 4:
-                if(listObject.removeFromBack(value)){
-                    cout << value << " removed from list\n";
-                }
-
+                cout << "Delete from end of list\n";
+                listObject.removeFromBack();
                 listObject.print();
                 break;
+
+            case 5:
+                cout << "Insert integer at index position\n"
+                    << "Enter " << typeName << ": ";
+                cin >> value;
+                cout << "Enter index position: ";
+                cin >> index;
+
+                listObject.insert(value, index);
+                listObject.print();
+                break;
+
+            case 6:
+                cout << "Delete based by value\n"
+                    << "Enter " << typeName << ": ";
+                cin >> value;
+
+                listObject.deleteByValue(value);
+                listObject.print();
         }
-    } while (choice < 5);
+    } while (choice < 7);
     cout << "End list test\n\n";
 }
 
@@ -81,11 +102,11 @@ void searchSortList(List<T>& listObject, const string& typeName){
         cin >> choice;
 
         switch(choice){
-            case 1: // TODO: linearSearch
+            case 1:
                 cout << "Enter " << typeName << " to search in the list: ";
                 cout << "Do line search" << endl;
                 cin >> value;
-                element = listObject.linearSearch(value);
+                element = listObject.LinearSearch(value);
                 if(element != -1){
                     cout << "Element found at index position " << element << ".\n";
                 } else {
@@ -93,28 +114,28 @@ void searchSortList(List<T>& listObject, const string& typeName){
                 }
                 break;
 
-            case 2: // TODO: SelectionSort
-                cout << "Enter " << typeName << ": ";
-                cout << "Do Select Sort" << endl;
-//                cin >> value;
-//                listObject.insertAtBack(value);
-//                listObject.print();
+            case 2:
+                cout << "Performing Select Sort" << endl;
+                listObject.SelectionSort();
+                listObject.print();
                 break;
-            case 3: // TODO: merge  Sort
-                cout << "Do merge sort" << endl;
-//                if(listObject.removeFromFront(value)){
-//                    cout << value << " removed from list\n";
-//                }
-//
-//                listObject.print();
+
+            case 3:
+                cout << "Performing merge sort" << endl;
+                listObject.MergeSort();
+                listObject.print();
                 break;
-            case 4: // TODO: binary search
-                cout << "Do binary search" << endl;
-//                if(listObject.removeFromBack(value)){
-//                    cout << value << " removed from list\n";
-//                }
-//
-//                listObject.print();
+
+            case 4:
+                cout << "Enter " << typeName << " to binary search in the list: ";
+                cin >> value;
+                element = listObject.BinarySearch(value);
+                if(element != -1){
+                    cout << "Element found at index position " << element << ".\n";
+                } else {
+                    cout << "Element not found in list.\n";
+                }
+                listObject.print();
                 break;
         }
     } while (choice < 5);
@@ -129,10 +150,7 @@ int main(){
     List<int> integerList;
     testList(integerList, "integer");
     searchSortList(integerList, "integer");
-    // TODO: User will input the search key
-    // int element{linearSearch(integerList, searchKey)};
-    // if(element != -1) {
-    // cout
+
 
     List<double> doubleList;
     testList(doubleList, "double");

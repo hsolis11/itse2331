@@ -7,157 +7,230 @@
 
 #include <iostream>
 #include <array>
-#include "listnode.h"
+
+using namespace std;
 
 template<typename NODETYPE>
 class List {
 public:
+    List(){
+        for(int i=0;i<50;i++){
+            myArray[i] = -1;
+        }
+    }
     ~List(){
         if(!isEmpty()){
             std::cout << "Destroying nodes...\n";
-
-            ListNode<NODETYPE>* currentPtr{firstPtr};
-            ListNode<NODETYPE>* tempPtr{nullptr};
-
-            while (currentPtr != nullptr){
-                tempPtr = currentPtr;
-                std::cout << tempPtr->data << '\n';
-                currentPtr = currentPtr->nextPtr;
-                delete tempPtr;
-            }
         }
-
         std::cout << "All nodes destroyed\n\n";
     }
 
-    void insertAtFront(const NODETYPE& value){
-        ListNode<NODETYPE>* newPtr{getNewNode(value)};
-
-        if(isEmpty()){
-            firstPtr = lastPtr = newPtr;
-            size++;
-        } else {
-            newPtr->nextPtr = firstPtr;
-            firstPtr = newPtr;
-            size++;
+    bool insertAtFront(const NODETYPE& value){
+        if(value > 0){
+            array<NODETYPE, 50> tempArray;
+            tempArray[0] = value;
+            for(int i=1; i<50; i++){
+                tempArray[i] = myArray[i-1];
+            }
+            myArray = tempArray;
+            arraySize++;
+            return true;
         }
+        return false;
     } // end insertAtFront
 
-    void insertAtBack(const NODETYPE& value){
-        ListNode<NODETYPE>* newPtr{getNewNode(value)};
-
-        if(isEmpty()){
-            firstPtr = lastPtr = newPtr;
-            size++;
-        } else {
-            lastPtr->nextPtr = newPtr;
-            lastPtr = newPtr;
-            size++;
+    bool insertAtBack(const NODETYPE& value){
+        if(value > 0){
+            int index = 0;
+            while(myArray[index] > -1){
+                index++;
+            }
+            myArray[index] = value;
+            arraySize++;
+            return true;
         }
+        return false;
     } // end insertAtBack
 
-    bool removeFromFront(NODETYPE& value){
-        if(isEmpty()){
+    bool removeFromFront(){
+        if(arraySize < 0){
             return false;
-        } else {
-            ListNode<NODETYPE>* tempPtr{firstPtr};
-
-            if(firstPtr == lastPtr){
-                firstPtr = lastPtr = nullptr;
-            } else {
-                firstPtr = firstPtr->nextPtr;
-            }
-
-            value = tempPtr->data;
-            delete tempPtr;
-            size--;
-            return true;
         }
+        array<NODETYPE, 50> tempArray;
+        for(int i=1; i<arraySize; i++){
+            tempArray[i-1] = myArray[i];
+        }
+        myArray = tempArray;
+        arraySize--;
+        return true;
     } // end removeFromFront
 
-    bool removeFromBack(NODETYPE& value){
-        if(isEmpty()){
-            return false;
-        }
-        else {
-            ListNode<NODETYPE>* tempPtr{lastPtr};
+    bool removeFromBack(){
+        myArray[arraySize-1] = -1;
+        arraySize--;
+        return true;
+    }
 
-            if(firstPtr == lastPtr){
-                firstPtr = lastPtr = nullptr;
-            } else {
-                ListNode<NODETYPE> *currentPtr{firstPtr};
+    bool insert(NODETYPE& value, int index){
 
-                while (currentPtr->nextPtr != lastPtr) {
-                    currentPtr = currentPtr->nextPtr;
+        if(value > -1 && (index > -1 && index < arraySize)){
+            array<NODETYPE, 50> tempArray;
+            for(int i=0; i<=arraySize; i++){
+                if(i<index){
+                    tempArray[i] = myArray[i];
+                }else if(i == index){
+                    tempArray[i] = value;
+                } else if(i <= arraySize){
+                    tempArray[i] = myArray[i-1];
                 }
-
-                lastPtr = currentPtr;
-                currentPtr->nextPtr = nullptr;
             }
-
-            value = tempPtr->data;
-            delete tempPtr;
-            size--;
+            myArray = tempArray;
+            arraySize++;
             return true;
         }
+        return false;
+    }
+
+    bool deleteByValue(NODETYPE& value){
+        bool found = false;
+        int index = -1;
+        array<NODETYPE, 50> tempArray;
+
+        for(int i=0; i < arraySize; i++){
+            if(value == myArray[i]){
+                found = true;
+            }
+            if(found){
+                tempArray[i] = myArray[i+1];
+            } else {
+                tempArray[i] = myArray[i];
+            }
+        }
+        myArray = tempArray;
+        arraySize--;
+        return found;
     }
 
     bool isEmpty() const {
-        return firstPtr == nullptr;
-    }
-
-    int getSize() const {
-        return size;
+        return arraySize < 0;
     }
 
     void print() const{
-        if(isEmpty()){
-            std::cout << "The list is empty\n\n";
-            return;
+        cout << "Array: ";
+        for(int i=0; i<arraySize; i++){
+            if(myArray[i]>-1){
+                cout << myArray[i] << ", ";
+            }
         }
-
-        ListNode<NODETYPE>* currentPtr{firstPtr};
-
-        std::cout << "The list is: ";
-
-        while(currentPtr != nullptr){
-            std::cout << currentPtr->data << ' ';
-            currentPtr = currentPtr->nextPtr;
-        }
-
-        std::cout << "\n\n";
+        cout << endl;
     } // end print()
 
-    int linearSearch(NODETYPE& value){
-        if(isEmpty()){
-            std::cout << "The list is empty\n\n";
-            return -1;
-        }
-
-        ListNode<NODETYPE>* currentPtr{firstPtr};
-        int index = 0;
-
-        while(currentPtr != nullptr){
-            if(currentPtr->data == value){
-                return index;
-            } else {
-                currentPtr = currentPtr->nextPtr;
-                index++;
+    int LinearSearch(const NODETYPE& key){
+        for(size_t i{0}; i<arraySize; ++i){
+            if(key == myArray[i]){
+                return i;
             }
         }
         return -1;
     }
 
+    void SelectionSort(){
+        for(size_t i{0}; i<arraySize -1; ++i){
+            size_t indexOfSmallest{i};
 
-private:
-    ListNode<NODETYPE>* firstPtr{nullptr};
-    ListNode<NODETYPE>* lastPtr{nullptr};
+            for(size_t index{i+1}; index<arraySize; ++index){
+                if(myArray[index]<myArray[indexOfSmallest]){
+                    indexOfSmallest = index;
+                }
+            }
 
-    ListNode<NODETYPE>* getNewNode(const NODETYPE& value){
-        return new ListNode<NODETYPE>{value};
+            NODETYPE hold{myArray[i]};
+            myArray[i] = myArray[indexOfSmallest];
+            myArray[indexOfSmallest] = hold;
+        }
+
     }
 
-    int size = 0;
+    void MergeSort(){
+        mergeSort(myArray, 0, arraySize-1);
+    }
+
+    int BinarySearch(const NODETYPE& key){
+        cout << "Sorting before binary search...\n";
+        MergeSort();
+
+        int low{0};
+        int high{static_cast<int>(arraySize) -1};
+        int middle{(low + high + 1) / 2};
+        int location{-1};
+
+        do {
+            if(key == myArray[middle]){
+                location = middle;
+            }
+            else if(key < myArray[middle]){
+                high = middle - 1;
+            }
+            else {
+                low = middle + 1;
+            }
+
+            middle = (low + high + 1) / 2;
+        } while((low <= high) && (location == -1));
+
+        return location;
+    }
+
+
+
+
+
+private:
+
+    void mergeSort(array<NODETYPE, 50>& items, size_t low, size_t high) {
+        if ((high - low) >= 1) {
+            size_t middle1{(low + high) / 2};
+            size_t middle2{middle1 + 1};
+
+            mergeSort(items, low, middle1);
+            mergeSort(items, middle2, high);
+
+            merge(items, low, middle1, middle2, high);
+        }
+    }
+
+    void merge(array<NODETYPE, 50>& items, size_t left, size_t middle1, size_t middle2, size_t right) {
+        size_t leftIndex{left};
+        size_t rightIndex{middle2};
+        size_t combinedIndex{left};
+        array <NODETYPE, 50> combined;
+
+        while (leftIndex <= middle1 && rightIndex <= right) {
+            if (items[leftIndex] <= items[rightIndex]) {
+                combined[combinedIndex++] = items[leftIndex++];
+            } else {
+                combined[combinedIndex++] = items[rightIndex++];
+            }
+        }
+
+        if (leftIndex == middle2) {
+            while (rightIndex <= right) {
+                combined[combinedIndex++] = items[rightIndex++];
+            }
+        } else {
+            while (leftIndex <= middle1) {
+                combined[combinedIndex++] = items[leftIndex++];
+            }
+        }
+
+        for (size_t i = left; i <= right; ++i) {
+            items[i] = combined[i];
+        }
+    }
+
+    int arraySize{0};
+    array<NODETYPE, 50> myArray;
+
 };
 
 
