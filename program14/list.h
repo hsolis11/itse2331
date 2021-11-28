@@ -76,18 +76,20 @@ public:
 
         if(value > -1 && (index > -1 && index < arraySize)){
             array<NODETYPE, 50> tempArray;
-            for(int i=0; i<arraySize; i++){
+            for(int i=0; i<=arraySize; i++){
                 if(i<index){
                     tempArray[i] = myArray[i];
                 }else if(i == index){
                     tempArray[i] = value;
-                } else {
+                } else if(i <= arraySize){
                     tempArray[i] = myArray[i-1];
                 }
-
             }
             myArray = tempArray;
+            arraySize++;
+            return true;
         }
+        return false;
     }
 
     bool deleteByValue(NODETYPE& value){
