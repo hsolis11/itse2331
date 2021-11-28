@@ -40,35 +40,34 @@ void testList(List<T>& listObject, const string& typeName){
 
         switch(choice){
             case 1:
-                cout << "Enter " << typeName << ": ";
+                cout << "Insert at begining\n"
+                    << "Enter " << typeName << ": ";
                 cin >> value;
                 listObject.insertAtFront(value);
                 listObject.print();
                 break;
 
             case 2:
-                cout << "Enter " << typeName << ": ";
+                cout << "Insert at end of list\n"
+                    << "Enter " << typeName << ": ";
                 cin >> value;
                 listObject.insertAtBack(value);
                 listObject.print();
                 break;
             case 3:
-                if(listObject.removeFromFront()){
-                    cout << value << " removed from list\n";
-                }
-
+                cout << "Delete from front of list\n";
+                listObject.removeFromFront();
                 listObject.print();
                 break;
             case 4:
-                if(listObject.removeFromBack()){
-                    cout << value << " removed from list\n";
-                }
-
+                cout << "Delete from end of list\n";
+                listObject.removeFromBack();
                 listObject.print();
                 break;
 
             case 5:
-                cout << "Enter " << typeName << ": ";
+                cout << "Insert integer at index position\n"
+                    << "Enter " << typeName << ": ";
                 cin >> value;
                 cout << "Enter index position: ";
                 cin >> index;
@@ -78,7 +77,8 @@ void testList(List<T>& listObject, const string& typeName){
                 break;
 
             case 6:
-                cout << "Enter " << typeName << ": ";
+                cout << "Delete based by value\n"
+                    << "Enter " << typeName << ": ";
                 cin >> value;
 
                 listObject.deleteByValue(value);
@@ -102,7 +102,7 @@ void searchSortList(List<T>& listObject, const string& typeName){
         cin >> choice;
 
         switch(choice){
-            case 1: // TODO: linearSearch
+            case 1:
                 cout << "Enter " << typeName << " to search in the list: ";
                 cout << "Do line search" << endl;
                 cin >> value;
@@ -114,19 +114,19 @@ void searchSortList(List<T>& listObject, const string& typeName){
                 }
                 break;
 
-            case 2: // TODO: SelectionSort
+            case 2:
                 cout << "Performing Select Sort" << endl;
                 listObject.SelectionSort();
                 listObject.print();
                 break;
 
-            case 3: // TODO: merge  Sort
+            case 3:
                 cout << "Performing merge sort" << endl;
                 listObject.MergeSort();
                 listObject.print();
                 break;
 
-            case 4: // TODO: binary search
+            case 4:
                 cout << "Enter " << typeName << " to binary search in the list: ";
                 cin >> value;
                 element = listObject.BinarySearch(value);
