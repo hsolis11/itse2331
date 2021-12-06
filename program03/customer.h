@@ -25,15 +25,14 @@ class Customer {
         // setters
         bool setName(string);
         bool setAddress(string);
-        bool setOrderNums(); // class template vector
+        bool addOrder(int); // class template vector
 
         // getters
         int getCustID();
         string getName();
         string getAddress();
         string getCustomerCreationTime();
-        void getOrderNums();
-        int getCustomerCount();
+        static int getCustomerCount();
         void outputReport();
 
 
@@ -47,9 +46,6 @@ class Customer {
         vector<int> orderNums;
         char* customerCreationTime;
         static int customerCount;
-
-
-
 };
 
 

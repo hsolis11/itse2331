@@ -10,7 +10,7 @@ Customer::Customer(string name){
 }
 
 Customer::~Customer(){
-    customerCount--;
+
 }
 
 void Customer::outputReport(){
@@ -19,14 +19,9 @@ void Customer::outputReport(){
     cout << "Customer ID: " << getCustID() << endl;
     cout << "created at: " << getCustomerCreationTime();            
     cout << "Customer Address: " << getAddress() << endl;
-    cout << "Order Numbers: ";
-    if(orderNums.size() > 0){
-        cout << endl;
-        for (int i = 0; i < orderNums.size(); i++){
-        cout << "\t- " << orderNums[i] << endl;
-        }
-    } else {
-        cout << "None" << endl;
+    cout << "Order Numbers:" << endl;
+    for (auto it = orderNums.begin(); it != orderNums.end(); ++it){
+        cout << "\tOrder ID: " << *it << endl;
     }
     
     cout << endl;
@@ -46,9 +41,9 @@ bool Customer::setAddress(string newAddress){
     return true;
 }
 
-bool Customer::setOrderNums(){
-    // (Class Template vector)?? holds the values in the vector?
-    return false;
+bool Customer::addOrder(int order_id){
+    orderNums.push_back(order_id);
+    return true;
 }
 
 
@@ -72,9 +67,6 @@ string Customer::getCustomerCreationTime(){
     return customerCreationTime;
 }
 
-void Customer::getOrderNums(){
-
-}
 
 int Customer::getCustomerCount(){
     return customerCount;

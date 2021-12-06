@@ -12,12 +12,12 @@ using std::vector;
 using std::time_t;
 
 
-class Customer {
+class Product {
 
     public:
         
-        Customer();
-        ~Customer();
+        Product();
+        ~Product();
 
         // setters
         bool setName(string);

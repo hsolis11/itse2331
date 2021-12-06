@@ -6,39 +6,48 @@
 #include <stdlib.h> // srand, rand
 #include <time.h> // time
 #include <ctime>
+#include <iostream>
 
 using std::string;
 using std::vector;
 using std::time_t;
+using std::cout;
+using std::endl;
 
 
 class Order {
 
     public:
-        Order();
+        Order(int);
         ~Order();
 
-        void setCustID();
-        void setProductNums();
+        void outputReport();
 
+
+        // Getters
         int getOrderNum();
         int getCustID();
         string getOrderCreationTime();
-        int getOrderCount();
-        
+        static int getOrderCount();
 
-        
+        // Setters
+        void setCustID();
+        void addProduct(int);
 
 
-    private:
+
+
+
+
+
+private:
+        void setOrderCreationTime();
+        void setOrderNum();
         int orderNum;
         int custID;
         vector<int> productNums;
         string orderCreationTime;
         static int orderCount;
-
-
-
 };
 
 

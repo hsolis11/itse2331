@@ -5,65 +5,134 @@ void outputReport(){
 
 }
 
-
+/*
+ * TODO: Simulate a simple product ordering system. Provide functionality to allow your user to create new customers, new products, and new orders.
+ * Customers will have orders. Orders will have products.
+ * */
 int main(){
 
-    vector<Customer> customerList;
 
     bool createNewCustomer = true;
-    char createCustomerResponse[5];
-    char customeryn[5];
+    string customerInput;
 
+    cout << "Creating Users\n";
     while(createNewCustomer){
-        cout << "Create new customer? (y/n)" << endl;
-        cin.getline(createCustomerResponse, 5);
 
-        if(createCustomerResponse[0] == 'y' || createCustomerResponse[0] == 'Y'){
-            char customerName[256];
-            char customerAddress[256];
-            cout << "Creating new customer " << endl;
+        cout << "\n\nCreate new user? ";
+        getline(cin, customerInput);
 
-            cout << "Enter customers name: ";
-            cin.getline(customerName, 256);
-            Customer customer = Customer(customerName);
+        if(customerInput[0] == 'y' || customerInput[0] == 'Y'){
 
+            string name;
+            cout << "Enter the customers full name: ";
+            getline(cin, name);
+            Customer customer(name);
 
-            cout << "Enter customers " << customerName << "'s address: ";
-            cin.getline(customerAddress, 256);
-            customer.setAddress(customerAddress);
+            cout << "Customer profile started\n";
+            cout << "CustomerID: " << customer.getCustID() << ", Name: " << customer.getName()
+                << ", created at: " << customer.getCustomerCreationTime() << endl;
+            cout << "Enter the customers address: ";
+            getline(cin, customerInput);
+            customer.setAddress(customerInput);
 
+            bool addOrder = true;
+            string orderNum;
+            string decision;
 
-            cout << "Add order to customer " << customer.getName() << "? (y/n)" << endl; 
-            cin.getline(customeryn, 5);
-            if(customeryn[0]== 'y' || customeryn[0] == 'Y'){
-                bool addMore = true;
-                char orderNum[25];
-
-                while(addMore){
-                    cout << "Enter the customers order number: ";
-                    cin.getline(orderNum, 25);
+            while(addOrder){
+                cout << "Add an order? ";
+                getline(cin, decision);
+                if(decision[0] == 'y' || decision[0] == 'Y'){
+                    cout << "Enter the order number: ";
+                    getline(cin, orderNum);
+                    customer.addOrder(stoi(orderNum));
+                } else {
+                    addOrder = false;
                 }
-                
             }
-            cout << endl;
-
-            
-
             customerList.push_back(customer);
+
         } else {
             createNewCustomer = false;
         }
 
+    } // end createNewCustomer while loop
 
-    }
-    
-    cout << "[OUTPUT CUSTOMER REPORT]" << endl;
-    for(Customer customer:customerList){
-        customer.outputReport();
-        cout << endl;
+    /******************************************************************************************************************
+     * Orders Class
+     *****************************************************************************************************************/
+    bool createNewOrder = true;
+    string userInput;
+
+    cout << "Creating New Orders\n";
+    while(createNewOrder){
+
+        cout << "\n\nCreate new order? ";
+        getline(cin, userInput);
+
+        if(userInput[0] == 'y' || userInput[0] == 'Y'){
+
+            string orderNumber;
+            string customerID;
+
+            cout << "\nEnter a customers ID: ";
+            getline(cin, customerID);
+            Order order(stoi(customerID));
+            cout << "Order started\n";
+            cout << "Order number: " << order.getOrderNum()
+                << " for customer ID: " << order.getCustID()
+                << " on " << order.getOrderCreationTime() << endl;
+
+            bool addProduct = true;
+            string productID;
+            string decision;
+
+            while(addProduct){
+                cout << "Add a product to order: " << order.getOrderNum() << "? ";
+                getline(cin, decision);
+                if(decision[0] == 'y' || decision[0] == 'Y'){
+                    cout << "Enter product ID: ";
+                    getline(cin, productID);
+                    order.addProduct(stoi(productID));
+
+                } else {
+                    addProduct = false;
+                }
+            }
+            orderList.push_back(order);
+
+
+        } else {
+            createNewOrder = false;
+        }
     }
 
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    cout << "\n\nPrinting Report of all " << Customer::getCustomerCount() << " customers:\n";
+    for (auto it = customerList.begin(); it != customerList.end(); ++it){
+        it->outputReport();
+    }
+
+    cout << "\n\nPrinting Report of all " << Order::getOrderCount() << " orders:\n";
+    for (auto it = orderList.begin(); it != orderList.end(); ++it){
+        it->outputReport();
+    }
+
 
 
     return 0;
