@@ -81,9 +81,11 @@ void Customer::setCustID(){
 }
 
 void Customer::setCustomerCreationTime(){
+    getTime(customerCreationTime);
+}
+
+void Customer::getTime(string &timestamp){
     time_t curr_time;
     curr_time = time(NULL);
-
-    customerCreationTime = ctime(&curr_time);
-    
+    timestamp = ctime(&curr_time);
 }

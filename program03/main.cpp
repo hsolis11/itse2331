@@ -1,7 +1,20 @@
 #include "main.h"
 
 void outputReport(){
+    cout << "\n\nPrinting Report of all " << Customer::getCustomerCount() << " customers:\n";
+    for (auto it = customerList.begin(); it != customerList.end(); ++it){
+        it->outputReport();
+    }
 
+    cout << "\n\nPrinting Report of all " << Order::getOrderCount() << " orders:\n";
+    for (auto it = orderList.begin(); it != orderList.end(); ++it){
+        it->outputReport();
+    }
+
+    cout << "\n\nPrinting Report of all " << Product::getProductCount() << " products:\n";
+    for (auto it = productList.begin(); it != productList.end(); ++it){
+        it->outputReport();
+    }
 
 }
 
@@ -15,10 +28,10 @@ int main(){
     bool createNewCustomer = true;
     string customerInput;
 
-    cout << "Creating Users\n";
+    cout << "Creating Customers";
     while(createNewCustomer){
 
-        cout << "\n\nCreate new user? ";
+        cout << "\n\nCreate new customer? ";
         getline(cin, customerInput);
 
         if(customerInput[0] == 'y' || customerInput[0] == 'Y'){
@@ -108,32 +121,57 @@ int main(){
     }
 
 
+    /******************************************************************************************************************
+     * Product Class
+     *****************************************************************************************************************/
+    bool createNewProduct = true;
 
+    cout << "Creating New Product\n";
+    while(createNewProduct){
 
+        cout << "\n\nCreate new product? ";
+        getline(cin, userInput);
 
+        if(userInput[0] == 'y' || userInput[0] == 'Y'){
 
+            string productName;
+            string productDescription;
 
+            cout << "\nEnter product name: ";
+            getline(cin, productName);
 
+            cout << "\nEnter product description: ";
+            getline(cin, productDescription);
 
+            Product product;
+            product.setProductName(productName);
+            product.setProductDescription(productDescription);
 
+            cout << "\nNew product created:" << endl;
+            product.outputReport();
 
+            productList.push_back(product);
 
-
-
-
-
-
-    cout << "\n\nPrinting Report of all " << Customer::getCustomerCount() << " customers:\n";
-    for (auto it = customerList.begin(); it != customerList.end(); ++it){
-        it->outputReport();
+        } else {
+            createNewProduct = false;
+        }
     }
 
-    cout << "\n\nPrinting Report of all " << Order::getOrderCount() << " orders:\n";
-    for (auto it = orderList.begin(); it != orderList.end(); ++it){
-        it->outputReport();
-    }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+    outputReport();
 
     return 0;
 }

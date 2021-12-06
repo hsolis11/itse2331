@@ -6,10 +6,13 @@
 #include <stdlib.h> // srand, rand
 #include <time.h> // time
 #include <ctime>
+#include <iostream>
 
 using std::string;
 using std::vector;
 using std::time_t;
+using std::cout;
+using std::endl;
 
 
 class Product {
@@ -19,30 +22,32 @@ class Product {
         Product();
         ~Product();
 
+        void outputReport();
+
         // setters
-        bool setName(string);
-        bool setAddress(string);
-        bool setOrderNums(); // class template vector
+        bool setProductName(string);
+        bool setProductDescription(string);
 
         // getters
-        int getCustID();
-        string getName();
-        string getAddress();
-        string getCustomerCreationTime();
-        void getOrderNums();
-        int getCustomerCount();
-
+        int getProductNum();
+        string getProductName();
+        string getProductDescription();
+        string getProductCreationTime();
+        static int getProductCount();
 
     private:
-        void setCustID();
-        void setCustomerCreationTime();
+        void setProductNum();
+        void setProductCreationTime();
+        void getTime(string&);
 
-        int custID;
-        string name;
-        string address;
-        vector<int> orderNums;
-        char* customerCreationTime;
-        static int customerCount;
+        int productNum;
+        string productName;
+        string productDescription;
+
+
+        string productCreationTime;
+
+        static int productCount;
 
 
 

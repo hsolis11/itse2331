@@ -41,6 +41,7 @@ class Order {
 
 
 private:
+        void getTime(string&);
         void setOrderCreationTime();
         void setOrderNum();
         int orderNum;

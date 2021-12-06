@@ -44,11 +44,13 @@ void Order::setOrderNum(){
 }
 
 void Order::setOrderCreationTime(){
+    getTime(orderCreationTime);
+}
+
+void Order::getTime(string &timestamp){
     time_t curr_time;
     curr_time = time(NULL);
-
-    orderCreationTime = ctime(&curr_time);
-
+    timestamp = ctime(&curr_time);
 }
 
 void Order::addProduct(int product_id) {

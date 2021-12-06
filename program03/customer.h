@@ -39,12 +39,13 @@ class Customer {
     private:
         void setCustID();
         void setCustomerCreationTime();
+        void getTime(string&);
 
         int custID;
         string name;
         string address;
         vector<int> orderNums;
-        char* customerCreationTime;
+        string customerCreationTime;
         static int customerCount;
 };
 
