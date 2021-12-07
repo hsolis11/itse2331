@@ -5,7 +5,7 @@ int main(){
     char response[2];
 
     while(sendPackage){
-        cout << "Send a package? ";
+        cout << "Send a package(y/n)? ";
         cin.getline(response, 2);
 
         if(response[0] == 'y' || response[0] == 'Y'){
@@ -57,6 +57,7 @@ int main(){
 
             bool validShippingOption = false;
 
+
             while(!validShippingOption){
                 cout << "Shipping options" << endl;
                 cout << "1) Overnight Shipping \n2) Two Day Shipping \n3) Regular Shipping" << endl;
@@ -66,74 +67,61 @@ int main(){
 
                 if(userInput[0] == '1'){
                     validShippingOption = true;
-                    OvernightPackage nightshipping;
+                    OvernightPackage *nightshipping = new OvernightPackage;
                     cout << "Overnight shipping selected" << endl;
                     cout << "Overnight rate: ";
                     cin.getline(userInput, 100);
-                    nightshipping.setOvernightRate(atof(userInput));
+                    nightshipping->setOvernightRate(atof(userInput));
 
-                    nightshipping.setName(userName);
-                    nightshipping.setAddress(userAddress);
-                    nightshipping.setCity(userCity);
-                    nightshipping.setState(userState);
-                    nightshipping.setSenderZip(sendersZip);
-                    nightshipping.setReceiverZip(receiversZip);
-                    nightshipping.setWeight(packageWeight);
-                    nightshipping.setCostPerOunce(costPerOunce);
+                    nightshipping->setName(userName);
+                    nightshipping->setAddress(userAddress);
+                    nightshipping->setCity(userCity);
+                    nightshipping->setState(userState);
+                    nightshipping->setSenderZip(sendersZip);
+                    nightshipping->setReceiverZip(receiversZip);
+                    nightshipping->setWeight(packageWeight);
+                    nightshipping->setCostPerOunce(costPerOunce);
 
                     cout << endl;
                     cout << endl;
 
-                    Package *nightshippingPtr{&nightshipping};
-
-                    packages.push_back(nightshippingPtr);
+                    packages.push_back(nightshipping);
 
                 } else if (userInput[0] == '2'){
                     validShippingOption = true;
-                    TwoDayPackage twodayshipping;
+                    TwoDayPackage *twodayshipping = new TwoDayPackage;
                     cout << " Two Day Shipping selected" << endl;
                     cout << "Two day shipping fee: ";
                     cin.getline(userInput, 100);
-                    twodayshipping.setTwoDayFee(atof(userInput));
+                    twodayshipping->setTwoDayFee(atof(userInput));
 
-                    twodayshipping.setName(userName);
-                    twodayshipping.setAddress(userAddress);
-                    twodayshipping.setCity(userCity);
-                    twodayshipping.setState(userState);
-                    twodayshipping.setSenderZip(sendersZip);
-                    twodayshipping.setReceiverZip(receiversZip);
-                    twodayshipping.setWeight(packageWeight);
-                    twodayshipping.setCostPerOunce(costPerOunce);
+                    twodayshipping->setName(userName);
+                    twodayshipping->setAddress(userAddress);
+                    twodayshipping->setCity(userCity);
+                    twodayshipping->setState(userState);
+                    twodayshipping->setSenderZip(sendersZip);
+                    twodayshipping->setReceiverZip(receiversZip);
+                    twodayshipping->setWeight(packageWeight);
+                    twodayshipping->setCostPerOunce(costPerOunce);
 
-                    cout << endl;
-                    cout << "Shipping cost: " << twodayshipping.calculateCost() << endl;
-                    cout << endl;
-
-                    Package *twodayshippingPtr{&twodayshipping};
-
-                    cout << endl;
-                    cout << "Pointer shipping cost: " << twodayshippingPtr->calculateCost() << endl;
-                    cout << endl;
-
-                    packages.push_back(twodayshippingPtr);
+                    packages.push_back(twodayshipping);
 
 
                 } else if (userInput[0] == '3'){
                     validShippingOption = true;
-                    Package regularshipping;
+                    Package *regularshipping = new Package;
                     cout << "Regular shipping selected" << endl;
 
-                    regularshipping.setName(userName);
-                    regularshipping.setAddress(userAddress);
-                    regularshipping.setCity(userCity);
-                    regularshipping.setState(userState);
-                    regularshipping.setSenderZip(sendersZip);
-                    regularshipping.setReceiverZip(receiversZip);
-                    regularshipping.setWeight(packageWeight);
-                    regularshipping.setCostPerOunce(costPerOunce);
+                    regularshipping->setName(userName);
+                    regularshipping->setAddress(userAddress);
+                    regularshipping->setCity(userCity);
+                    regularshipping->setState(userState);
+                    regularshipping->setSenderZip(sendersZip);
+                    regularshipping->setReceiverZip(receiversZip);
+                    regularshipping->setWeight(packageWeight);
+                    regularshipping->setCostPerOunce(costPerOunce);
 
-                    Package *regularshippingPtr{&regularshipping};
-                    packages.push_back(regularshippingPtr);
+                    packages.push_back(regularshipping);
                 } else {
                     cout << "Error: invalid input. Enter one of the following 1,2,3.";
                 }
@@ -156,22 +144,25 @@ int main(){
 
     double totalCost = 0;
 
-    for (int i = 0; i < packages.size(); i++){
-        cout << "User shipping info for package " << i << endl;
-        cout << "Name: " << packages[i]->getName() << endl;
-        cout << "Address: " << packages[i]->getAddress() << endl;
-        cout << "City: " << packages[i]->getCity() << endl;
-        cout << "State: " << packages[i]->getState() << endl;
-        cout << "Senders zipcode: " << packages[i]->getSenderZip() << endl;
-        cout << "Receivers Zipcode: " << packages[i]->getReceiverZip() << endl;
-        cout << "Package Weight: " << packages[i]->getWeight() << endl;
-        cout << "Cost per Ounce: " << packages[i]->getCostPerOunce() << endl;
+    for (Package* packagePtr : packages){
+        if(packagePtr != nullptr){
+            // cout << "User shipping info for package " << 1 << endl;
+            cout << "Name: " << packagePtr->getName() << endl;
+            cout << "Address: " << packagePtr->getAddress() << endl;
+            cout << "City: " << packagePtr->getCity() << endl;
+            cout << "State: " << packagePtr->getState() << endl;
+            cout << "Senders zipcode: " << packagePtr->getSenderZip() << endl;
+            cout << "Receivers Zipcode: " << packagePtr->getReceiverZip() << endl;
+            cout << "Package Weight: " << packagePtr->getWeight() << endl;
+            cout << "Cost per Ounce: " << packagePtr->getCostPerOunce() << endl;
 
-        cout << endl;
-        cout << "Shipping cost: " << packages[i]->calculateCost() << endl;
-        totalCost += packages[i]->calculateCost();
-        cout << endl;
-        cout << endl;
+            cout << endl;
+            cout << "Shipping cost: " << packagePtr->calculateCost() << endl;
+            totalCost += packagePtr->calculateCost();
+            cout << endl;
+            cout << endl;
+        }
+
     }
 
     cout << endl;

@@ -12,7 +12,7 @@ public:
     ~Package();
 
     // member functions
-    double calculateCost(); // returns a double of weight x costPerOunce
+    virtual double calculateCost(); // returns a double of weight x costPerOunce
     // ENSURE weight and costPerOunce is > 0
 
     // Setters

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory>
 
 #include "overnightpackage.h"
 #include "twodaypackage.h"
@@ -16,6 +17,5 @@ using std::string;
 using std::vector;
 
 vector<Package *> packages;
-
 
 #endif
